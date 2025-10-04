@@ -1,20 +1,25 @@
+// COMSC-210 | Lab 18 | Fahad Fawad Ahmad 
+// IDE used: Visual Studio
 #include <iostream>
 using namespace std;
 
-struct Node {
+struct MovieReviews {
     double rating;
     string comment;
 
-    Node * next;
+    MovieReviews * next;
 };
 
-void nodeAddHead(Node *&);
-void nodeAddTail(Node *&);
-void output(Node *);
+void nodeAddHead(MovieReviews *&);
+void nodeAddTail(MovieReviews *&);
+void output(MovieReviews *);
 
 int main() {
+    MovieReviews * head = nullptr;
+
+    //Asks User which linked list method to use
     int entry;
-    cout << "test1" << endl;
+    cout << "test2" << endl;
     cout << "Which linked list method would you like to use?" << endl;
     cout << "[1] New nodes at the head of the linked list\n[2] New nodes at the tail of the linked list" << endl;
     cout << "Choice: ";
@@ -28,25 +33,58 @@ int main() {
         cout << endl;
     }
 
-    Node * head = nullptr;
-    cout << "Enter Review Ratings" << endl;
+    //Asks for User input on each movie
+    MovieReviews * newVal = new MovieReviews;
+    char continueKey = 'Y';
+
+    while (continueKey == 'Y') { 
+        cout << "Enter review rating 0-5: ";
+        cin >> newVal->rating;
+        while (newVal->rating > 5 || newVal->rating < 0) {
+            cout << "Enter a valid rating from 0-5: ";
+            cin >> newVal->rating;
+        }
+
+        cout << "Enter review comments: ";
+        cin >> newVal->comment;
+        cout << endl;
+
+        cout << "Enter another review? Y/N: ";
+        cin >> continueKey;
+        while (continueKey != 'Y' && continueKey != 'N' && continueKey != 'y' && continueKey != 'n') {
+            cout << "Enter a valid option Y/N: ";
+            cin >> continueKey;
+        }
+
+        //Whether to add it to the head or tail
+        if (entry == 1) {
+            if (!head) { //if first
+                head = newVal;
+                newVal->next = nullptr;
+                newVal->
+            }
+        } 
+        else if (entry == 2) { //if second or more
+
+        }
+    }
 }
 
-void nodeAddHead(Node *&head) {
+void nodeAddHead(MovieReviews *&head) {
 
 }
 
-void nodeAddTail(Node *&head) {
+void nodeAddTail(MovieReviews *&head) {
 
 }
 
-void output(Node * head) {
+void output(MovieReviews * head) {
     if (!head) {
         cout << "Empty list" << endl;
         return;
     }
 
-    Node * current = head;
+    MovieReviews * current = head;
     int count = 1;
     while (current) {
         cout << "Review #" << count++ << ": " << current->rating << ": " << current->comment << endl;
