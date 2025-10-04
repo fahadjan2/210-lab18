@@ -10,8 +10,6 @@ struct MovieReviews {
     MovieReviews * next;
 };
 
-void nodeAddHead(MovieReviews *&);
-void nodeAddTail(MovieReviews *&);
 void output(MovieReviews *);
 
 int main() {
@@ -19,7 +17,7 @@ int main() {
 
     //Asks User which linked list method to use
     int entry;
-    cout << "test2" << endl;
+    cout << "test3" << endl;
     cout << "Which linked list method would you like to use?" << endl;
     cout << "[1] New nodes at the head of the linked list\n[2] New nodes at the tail of the linked list" << endl;
     cout << "Choice: ";
@@ -34,10 +32,11 @@ int main() {
     }
 
     //Asks for User input on each movie
-    MovieReviews * newVal = new MovieReviews;
+    MovieReviews * previous = nullptr;
     char continueKey = 'Y';
-
     while (continueKey == 'Y') { 
+        MovieReviews * newVal = new MovieReviews;
+
         cout << "Enter review rating 0-5: ";
         cin >> newVal->rating;
         while (newVal->rating > 5 || newVal->rating < 0) {
@@ -57,25 +56,31 @@ int main() {
         }
 
         //Whether to add it to the head or tail
-        if (entry == 1) {
+        if (entry == 1) { //add to head
             if (!head) { //if first
                 head = newVal;
                 newVal->next = nullptr;
-                newVal->
+            }
+            else { //if second or more
+                newVal->next = head;
+                head = newVal;
             }
         } 
-        else if (entry == 2) { //if second or more
-
+        else if (entry == 2) { //add to tail
+            if (!head) { //if first
+                head = newVal;
+                previous = newVal;
+                newVal->next = nullptr;
+            }
+            else { //if second or more
+                previous->next = newVal;
+                previous = newVal;
+                newVal->next = nullptr;
+            }
         }
     }
-}
 
-void nodeAddHead(MovieReviews *&head) {
-
-}
-
-void nodeAddTail(MovieReviews *&head) {
-
+    output(head);
 }
 
 void output(MovieReviews * head) {
@@ -86,8 +91,12 @@ void output(MovieReviews * head) {
 
     MovieReviews * current = head;
     int count = 1;
+    int sum = 0;
     while (current) {
+        sum += current->rating;
         cout << "Review #" << count++ << ": " << current->rating << ": " << current->comment << endl;
         current = current->next;
     }
+
+    cout << "Average: " << sum / (count - 1) << endl;
 }
